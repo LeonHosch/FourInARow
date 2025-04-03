@@ -1,3 +1,5 @@
+""" A simple console-based Connect Four game in Python """
+
 import random
 
 def intsafeinput(text):
@@ -19,7 +21,6 @@ class FourInARow:
         self.height = 6
         self.print_playfield()
         self.gameplay()
-        return
 
     def print_playfield(self):
         """ prints the matrix so the player can see what the playfield looks like
@@ -34,7 +35,6 @@ class FourInARow:
                     print("-", end="  ")
             print("|")
         print(" -----------------------")
-        return
 
     def gameplay(self):
         """ gameplay loop of our connect-four game """
