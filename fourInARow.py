@@ -9,7 +9,7 @@ def intsafeinput(text):
             print("Integer input expected\n")
 
 class fourInARow:
-    
+
     def __init__(self):
         self.matrix = [[], [], [], [], [], [], []]
         self.width = len(self.matrix)
@@ -17,7 +17,7 @@ class fourInARow:
         self.printplayfield()
         self.gameplay()
         return
-    
+
     def printplayfield(self):
         print(" -----------------------")
         for x_coordinate in range(self.height-1, -1, -1):
@@ -30,7 +30,7 @@ class fourInARow:
             print("|")
         print(" -----------------------")
         return
-    
+
     def gameplay(self):
         maxmoves = self.width * self.height
         for counter in range(maxmoves):
@@ -87,7 +87,7 @@ class fourInARow:
                     return erg
             else:
                 return erg
-            
+
     def botPlay(self):
         while True:
             move = random.randint(0, 6)
