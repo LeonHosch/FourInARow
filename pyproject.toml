@@ -1,0 +1,16 @@
+[project]
+name = "four_in_a_row"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Oliver Merkel", email = "Merkel.Oliver@web.de"},
+    {name = "Leon Hosch", email = "leon.hosch.6113@gmail.com"},
+]
+dependencies = ["pytest>=8.3.5", "pytest-cov>=6.1.1"]
+requires-python = ">=3.11.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
