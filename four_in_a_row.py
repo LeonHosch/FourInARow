@@ -14,13 +14,12 @@ def intsafeinput(text):
 class FourInARow:
     """ The game class containing the methods needed to run the game """
 
-    def __init__(self):
+    def __init__(self, matrix = [[], [], [], [], [], [], []]):
         """ initializing the game class """
-        self.matrix = [[], [], [], [], [], [], []]
+        self.matrix = matrix
         self.width = len(self.matrix)
         self.height = 6
         self.print_playfield()
-        self.gameplay()
 
     def print_playfield(self):
         """ prints the matrix so the player can see what the playfield looks like
@@ -61,6 +60,7 @@ class FourInARow:
 
             self.matrix[column].append(symbol)
             self.print_playfield()
+            print(self.matrix)
             if self.win_test([column, len(self.matrix[column])-1], symbol):
                 print(f"The player with the symbol '{symbol}' won the game!")
                 return
@@ -91,6 +91,8 @@ class FourInARow:
                 if len(self.matrix[coordinates[0]]) > coordinates[1] >= 0:
                     if self.matrix[coordinates[0]][coordinates[1]] == symbol:
                         erg += 1
+                    else:
+                        return erg
                 else:
                     return erg
             else:
@@ -103,6 +105,7 @@ class FourInARow:
             if len(self.matrix[move]) < self.height:
                 return move
 
-
-game = FourInARow()
-print("Thanks for playing!")
+if __name__ == "__main__":
+    game = FourInARow()
+    game.gameplay()
+    print("Thanks for playing!")
