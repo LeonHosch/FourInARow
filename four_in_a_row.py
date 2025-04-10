@@ -14,9 +14,12 @@ def intsafeinput(text):
 class FourInARow:
     """ The game class containing the methods needed to run the game """
 
-    def __init__(self, matrix = [[], [], [], [], [], [], []]):
+    def __init__(self, matrix = None):
         """ initializing the game class """
-        self.matrix = matrix
+        if matrix is None:
+            self.matrix = [[], [], [], [], [], [], []]
+        else:
+            self.matrix = matrix
         self.width = len(self.matrix)
         self.height = 6
         self.print_playfield()
