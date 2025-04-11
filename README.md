@@ -3,6 +3,7 @@
 This is an implementation of a Four in a Row game.
 
 [![Pylint](https://github.com/LeonHosch/FourInARow/actions/workflows/pylint.yml/badge.svg)](https://github.com/LeonHosch/FourInARow/actions/workflows/pylint.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 ## Rules
 
