@@ -1,25 +1,53 @@
-# Architecture of a Four in a Row game
+# Software Architecture of the Four in a Row Game
 
-We are planning to implement multiple game engines as AI players for the Four in a Row game.
+This document outlines the architecture for implementing a Four in a Row game,
+including its components and their responsibilities.
 
-## Board representation
+## Overview
 
-This class shall represent the game Board itself plus it's methods to handle changes applied by a player move.
-The Board class also holds the information which of the two players is the currently active player
-(So clarifying who's player's turn it is currently).
+The game will support multiple AI engines as players, alongside a human player.
+This modular architecture ensures flexibility, scalability, and ease of maintenance for the Four in a Row game.
 
-## Engines
+## Board Representation
 
-Since there might be multiple Engines implemented this means that there shall be a folder ./engine containing the ai_(engine_type).py files.
-Each file represents an own engine type like mcts_uct or minimax or random. As an exceptional game engine there is a human.py
-The human.py acts like any other game engine but requests the move to be performed as an user's input entered
-on stdin. As an exception the user might enter commands like Take Back, Restart, Change Level, Exit, Redraw, List History
+The `Board` class represents the game board and provides methods to manage player moves.
+It also tracks the currently active player, ensuring clarity on whose turn it is.
 
-## MoveGenerator
+### Responsibilities
 
-The MoveGenerator is intended to provide a complete list of allowed moves on a given Board.
+- **State Management**: Maintain the board state and the active player.
+- **Winning Condition Check**: Provide a method to check if the game has ended. This method returns a tuple `(end_of_game: bool, winner: Optional[symbol])`, where `winner` is the symbol of the winning player or `None` if there is no winner.
+- **Undo Functionality**: Implement an `undo_ply` method to revert the last half move (aka ply like in computer chess (one ply, multiple plies)).
 
-## History
+## Game Engines
 
-The History will hold the game history. Mind it should support to Take Back a full move. Mind a full move
-consist of two plies. There are plies for one player and the opponent player.
+The game supports multiple AI engines, each implemented as a separate module in the `./engine` folder. Each engine is responsible for determining the next move based on its algorithm.
+
+### Engine Types
+
+- **AI Engines**: Examples include `ai_mcts_uct.py`, `ai_minimax.py`, `ai_neural_network.py`, `ai_zero_alpha.py`, and `ai_random.py`.
+- **Human Engine**: The `human.py` module acts as a game engine but interacts with the user via standard input. It also supports commands such as:
+  - `Take Back` or `Undo`
+  - `Restart`
+  - `Change Level`
+  - `Switch Engine`
+  - `Exit`
+  - `Redraw`
+  - `List History`
+
+## Move Generator
+
+The `MoveGenerator` class provides a complete list of valid moves for a given board state. This ensures that all engines and the human player operate within the game's rules.
+
+## Game History
+
+The `History` class maintains a record of all moves made during the game. It supports:
+
+- **Undo Functionality**: Allowing the reversal of a full move (two plies) or a single ply.
+- **Move Tracking**: Storing the sequence of moves for replay or analysis.
+- **Replay Functionality**: Provide an iterator or pointer in the game's History to traverse or play back single moves step by step.
+
+### Terminology
+
+- **Ply**: A single move by one player.
+- **Full Move**: A pair of plies, one from each player.
