@@ -1,6 +1,7 @@
 # Four in a Row
 
 This is an implementation of a Four in a Row game.
+
 [![Super-Linter](https://github.com/LeonHosch/FourInARow/actions/workflows/super-linter.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
 [![Pylint](https://github.com/LeonHosch/FourInARow/actions/workflows/pylint.yml/badge.svg)](https://github.com/LeonHosch/FourInARow/actions/workflows/pylint.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
