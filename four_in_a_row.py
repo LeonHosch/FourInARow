@@ -1,6 +1,8 @@
 """ A simple console-based Connect Four game in Python """
 
 import random
+from engine import bot_minimax
+from copy import deepcopy
 
 def intsafeinput(text):
     """ function which is used to safely get an integer input"""
@@ -36,6 +38,8 @@ class FourInARow:
                 except IndexError:
                     print("-", end="  ")
             print("|")
+        print("| --------------------- |")
+        print("|  1  2  3  4  5  6  7  |")
         print(" -----------------------")
 
     def gameplay(self):
@@ -44,7 +48,13 @@ class FourInARow:
         for counter in range(maxmoves):
             if counter % 2:
                 symbol = "X"
-                column = self.bot_play()
+                gamestate = deepcopy(self.matrix)
+                minimax = bot_minimax.Minimax(gamestate, symbol, self.height, self.width)
+                column = minimax.best_move
+                self.print_playfield()
+                if len(self.matrix[column]) >= self.height:
+                    print("Bot played an illegal move!")
+                # column = self.bot_play()
             else:
                 symbol = "O"
 
@@ -74,7 +84,7 @@ class FourInARow:
         counter = 0
         previous = 0
         for direction in directions:
-            win_con = self.direction_check(direction, symbol, [coordinates[0], coordinates[1]])
+            win_con = self.direction_check(direction, symbol, [coordinates[0], coordinates[1]]) # review!
             if win_con + previous >= 3:
                 return True
             if counter % 2:
@@ -86,20 +96,20 @@ class FourInARow:
 
     def direction_check(self, direction, symbol, coordinates):
         """ check the given direction for matching symbols """
-        erg = 0
+        result = 0
         while True:
             coordinates[0] += direction[0]
             coordinates[1] += direction[1]
             if self.width > coordinates[0] >= 0:
                 if len(self.matrix[coordinates[0]]) > coordinates[1] >= 0:
                     if self.matrix[coordinates[0]][coordinates[1]] == symbol:
-                        erg += 1
+                        result += 1
                     else:
-                        return erg
+                        return result
                 else:
-                    return erg
+                    return result
             else:
-                return erg
+                return result
 
     def bot_play(self):
         """ the AI of the bot player """
