@@ -6,7 +6,7 @@ First section lists untagged achievements.
 Next sections are ordered by tags used in the repository.
 
 ## package_dependency_management_swa_debug_test
-(2025-04-15)
+(2025-04-15, d40c0ce4c9e5ab97f72e98f27e0168c4bda74570)
 
 * Remove initial set of PyLint warnings (Linter warnings)
 * create AUTHORS, LICENSE, CHANGELOG, README.md
