@@ -9,7 +9,10 @@ This is an implementation of a Four in a Row game.
 
 ## Rules
 
-* some text...
+* Players take turns dropping own pieces into columns of a vertical grid.
+* The goal is to connect four or more own pieces in a row—horizontally, vertically, or diagonally.
+* Thus the first player to achieve this wins the game.
+* If the grid is filled without a winner, the game ends in a draw.
 
 ## Setup / Usage
 
