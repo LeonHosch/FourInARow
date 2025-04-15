@@ -5,7 +5,8 @@ The file collects the changelog in anti chronological listing.
 First section lists untagged achievements.
 Next sections are ordered by tags used in the repository.
 
-## Untagged achievements
+## package_dependency_management_swa_debug_test
+(2025-04-15)
 
 * Remove initial set of PyLint warnings (Linter warnings)
 * create AUTHORS, LICENSE, CHANGELOG, README.md
@@ -15,8 +16,18 @@ Next sections are ordered by tags used in the repository.
 * introduce unittest, Pytest
     * sample set up in VSCode
 * coverage analysis (line coverage, branch coverage, function coverage, module coverage)
+* Dependabot (Vulnerability alerts, invalid / insecure tooling, baseline configuration checking)
+* application debugging (prefer debugpy over deprecated python debugger)
+    * https://code.visualstudio.com/docs/python/debugging
+    * launch.json : "type": "debugpy" instead "type": "python"
+* SW Architecture
+    * module splitting
+        * move generator (legal moves)
+        * separate player or engine interface
+        * game history (iterate through history to replay)
 
 ## linter_as_github_action
+(2025-04-03, 1c2c00c111367bdeafd9506a1510e01b1de8dfa1)
 
 * initial commit (Four in a Row running in console version for one human player and random AI player)
 * First GitHub Action on community runner (Pylint as a build step to include in a development tool chain) 
