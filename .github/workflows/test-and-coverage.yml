@@ -27,18 +27,20 @@ jobs:
       - name: Install PDM
         run: |
           python -m pip install --upgrade pip
-          pip install pdm
+          pip install -r requirements.txt
+	  pip install flake8
 
       - name: Install dependencies
-        run: pdm install
+        run: pdm update
+
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings.
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Run tests with coverage
         run: |
-          pdm run pytest --cov=FourInARow --cov-report=xml
+          pdm run pytest -v --cov=.
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml
-          fail_ci_if_error: true
