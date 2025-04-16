@@ -85,8 +85,7 @@ class FourInARow:
 
     def win_test(self, coordinates, symbol):
         """check if the game has been won by adding up matching symbols in a row"""
-        directions = [(-1, 0), (1, 0), (-1, -1), (1, 1),
-                      (1, -1), (-1, 1), (0, -1)]
+        directions = [(-1, 0), (1, 0), (-1, -1), (1, 1), (1, -1), (-1, 1), (0, -1)]
         counter = 0
         previous = 0
         for direction in directions:

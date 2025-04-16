@@ -50,5 +50,4 @@ class History:
 
     def __str__(self):
         """Return a readable string representation of the history"""
-        return " ".join(f"{i + 1}. {move}"
-                        for i, move in enumerate(self.moves))
+        return " ".join(f"{i + 1}. {move}" for i, move in enumerate(self.moves))
