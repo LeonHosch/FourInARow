@@ -19,7 +19,7 @@ def test_board_initialization():
     assert board.rows == 6
     assert board.columns == 7
     assert all(len(row) == 7 for row in board.grid)
-    assert all(cell == ' ' for row in board.grid for cell in row)
+    assert all(cell == " " for row in board.grid for cell in row)
 
 
 def test_drop_piece_valid():
@@ -34,8 +34,8 @@ def test_drop_piece_valid():
     Then it should be placed in the lowest available row of that column.
     """
     board = Board()
-    assert board.drop_piece(0, 'X') is True
-    assert board.grid[5][0] == 'X'
+    assert board.drop_piece(0, "X") is True
+    assert board.grid[5][0] == "X"
 
 
 def test_drop_piece_invalid_column():
@@ -50,10 +50,10 @@ def test_drop_piece_invalid_column():
     Then it should return False and not modify the board.
     """
     board = Board()
-    assert board.drop_piece(-1, 'X') is False
-    assert board.drop_piece(7, 'X') is False
+    assert board.drop_piece(-1, "X") is False
+    assert board.drop_piece(7, "X") is False
     assert all(len(row) == 7 for row in board.grid)
-    assert all(cell == ' ' for row in board.grid for cell in row)
+    assert all(cell == " " for row in board.grid for cell in row)
 
 
 def test_drop_piece_full_column():
@@ -69,10 +69,10 @@ def test_drop_piece_full_column():
     """
     board = Board()
     for _ in range(6):
-        assert board.drop_piece(0, 'X') is True
-    assert board.grid[0][0] == 'X'
-    assert board.drop_piece(0, 'O') is False
-    assert board.grid[0][0] == 'X'
+        assert board.drop_piece(0, "X") is True
+    assert board.grid[0][0] == "X"
+    assert board.drop_piece(0, "O") is False
+    assert board.grid[0][0] == "X"
 
 
 def test_is_full_false():
@@ -105,7 +105,7 @@ def test_is_full_true():
     board = Board()
     for col in range(board.columns):
         for _ in range(board.rows):
-            board.drop_piece(col, 'X')
+            board.drop_piece(col, "X")
     assert board.is_full() is True
 
 
@@ -122,8 +122,8 @@ def test_check_winner_horizontal():
     """
     board = Board()
     for col in range(4):
-        board.drop_piece(col, 'X')
-    assert board.check_winner('X') is True
+        board.drop_piece(col, "X")
+    assert board.check_winner("X") is True
 
 
 def test_check_winner_vertical():
@@ -139,8 +139,8 @@ def test_check_winner_vertical():
     """
     board = Board()
     for _ in range(4):
-        board.drop_piece(0, 'X')
-    assert board.check_winner('X') is True
+        board.drop_piece(0, "X")
+    assert board.check_winner("X") is True
 
 
 def test_check_winner_diagonal_bottom_left_to_top_right():
@@ -155,17 +155,17 @@ def test_check_winner_diagonal_bottom_left_to_top_right():
     Then it should return True for that player.
     """
     board = Board()
-    board.drop_piece(0, 'X')
-    board.drop_piece(1, 'O')
-    board.drop_piece(1, 'X')
-    board.drop_piece(2, 'O')
-    board.drop_piece(2, 'O')
-    board.drop_piece(2, 'X')
-    board.drop_piece(3, 'O')
-    board.drop_piece(3, 'O')
-    board.drop_piece(3, 'O')
-    board.drop_piece(3, 'X')
-    assert board.check_winner('X') is True
+    board.drop_piece(0, "X")
+    board.drop_piece(1, "O")
+    board.drop_piece(1, "X")
+    board.drop_piece(2, "O")
+    board.drop_piece(2, "O")
+    board.drop_piece(2, "X")
+    board.drop_piece(3, "O")
+    board.drop_piece(3, "O")
+    board.drop_piece(3, "O")
+    board.drop_piece(3, "X")
+    assert board.check_winner("X") is True
 
 
 def test_check_winner_diagonal_top_left_to_bottom_right():
@@ -180,17 +180,17 @@ def test_check_winner_diagonal_top_left_to_bottom_right():
     Then it should return True for that player.
     """
     board = Board()
-    board.drop_piece(3, 'X')
-    board.drop_piece(2, 'O')
-    board.drop_piece(2, 'X')
-    board.drop_piece(1, 'O')
-    board.drop_piece(1, 'O')
-    board.drop_piece(1, 'X')
-    board.drop_piece(0, 'O')
-    board.drop_piece(0, 'O')
-    board.drop_piece(0, 'O')
-    board.drop_piece(0, 'X')
-    assert board.check_winner('X') is True
+    board.drop_piece(3, "X")
+    board.drop_piece(2, "O")
+    board.drop_piece(2, "X")
+    board.drop_piece(1, "O")
+    board.drop_piece(1, "O")
+    board.drop_piece(1, "X")
+    board.drop_piece(0, "O")
+    board.drop_piece(0, "O")
+    board.drop_piece(0, "O")
+    board.drop_piece(0, "X")
+    assert board.check_winner("X") is True
 
 
 def test_check_winner_no_winner():
@@ -205,12 +205,12 @@ def test_check_winner_no_winner():
     Then it should return False for both players.
     """
     board = Board()
-    board.drop_piece(0, 'X')
-    board.drop_piece(1, 'O')
-    board.drop_piece(2, 'X')
-    board.drop_piece(3, 'O')
-    assert board.check_winner('X') is False
-    assert board.check_winner('O') is False
+    board.drop_piece(0, "X")
+    board.drop_piece(1, "O")
+    board.drop_piece(2, "X")
+    board.drop_piece(3, "O")
+    assert board.check_winner("X") is False
+    assert board.check_winner("O") is False
 
 
 def test_check_is_draw():
@@ -226,23 +226,23 @@ def test_check_is_draw():
     """
     board = Board()
     for _ in range(3):
-        board.drop_piece(0, 'X')
-        board.drop_piece(1, 'O')
-        board.drop_piece(2, 'X')
-        board.drop_piece(3, 'X')
-        board.drop_piece(4, 'X')
-        board.drop_piece(5, 'O')
-        board.drop_piece(6, 'X')
-        board.drop_piece(0, 'O')
-        board.drop_piece(1, 'X')
-        board.drop_piece(2, 'O')
-        board.drop_piece(3, 'O')
-        board.drop_piece(4, 'O')
-        board.drop_piece(5, 'X')
-        board.drop_piece(6, 'O')
+        board.drop_piece(0, "X")
+        board.drop_piece(1, "O")
+        board.drop_piece(2, "X")
+        board.drop_piece(3, "X")
+        board.drop_piece(4, "X")
+        board.drop_piece(5, "O")
+        board.drop_piece(6, "X")
+        board.drop_piece(0, "O")
+        board.drop_piece(1, "X")
+        board.drop_piece(2, "O")
+        board.drop_piece(3, "O")
+        board.drop_piece(4, "O")
+        board.drop_piece(5, "X")
+        board.drop_piece(6, "O")
     assert board.is_full() is True
-    assert board.check_winner('X') is False
-    assert board.check_winner('O') is False
+    assert board.check_winner("X") is False
+    assert board.check_winner("O") is False
 
 
 def test_reset_board():
@@ -257,9 +257,9 @@ def test_reset_board():
     Then it should clear the board and set all cells to empty spaces.
     """
     board = Board()
-    board.drop_piece(0, 'X')
+    board.drop_piece(0, "X")
     board.reset()
-    assert all(cell == ' ' for row in board.grid for cell in row)
+    assert all(cell == " " for row in board.grid for cell in row)
 
 
 def test_board_str_empty():
@@ -299,9 +299,9 @@ def test_board_str_with_pieces():
     Then it should return a string representation of the board with the pieces.
     """
     board = Board()
-    board.drop_piece(0, 'X')
-    board.drop_piece(1, 'O')
-    board.drop_piece(1, 'X')
+    board.drop_piece(0, "X")
+    board.drop_piece(1, "O")
+    board.drop_piece(1, "X")
     expected_output = (
         " | | | | | | \n"
         " | | | | | | \n"
