@@ -1,11 +1,15 @@
 # .github/workflows/test-and-coverage.yml
 name: Test and Coverage
 
+permissions:
+  contents: read
+  statuses: write
+
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   test:
@@ -18,23 +22,24 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'  # or your project's version
+          python-version: "3.13"
 
       - name: Install PDM
         run: |
           python -m pip install --upgrade pip
-          pip install pdm
+          pip install -r requirements.txt
+          pip install flake8
 
       - name: Install dependencies
-        run: pdm install
+        run: pdm update
+
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings.
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Run tests with coverage
         run: |
-          pdm run pytest --cov=FourInARow --cov-report=xml
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml
-          fail_ci_if_error: true
+          pdm run pytest -v --cov=. --cov-report=html --cov-report=term-missing $(git ls-files '*.py')
