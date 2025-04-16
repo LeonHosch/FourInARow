@@ -37,8 +37,7 @@ class Minimax:
             previous = None
             match_in_row = 0
             for matrix_value in column:
-                match_in_row = self.check_match(
-                    previous, matrix_value, match_in_row)
+                match_in_row = self.check_match(previous, matrix_value, match_in_row)
                 previous = matrix_value
             if remaining_plays + match_in_row < 3:
                 return -8
@@ -56,8 +55,7 @@ class Minimax:
                     matrix_value = column[row]
                 except IndexError:
                     matrix_value = None
-                match_in_row = self.check_match(
-                    previous, matrix_value, match_in_row)
+                match_in_row = self.check_match(previous, matrix_value, match_in_row)
                 if previous_in_row == match_in_row > 0:
                     possible_in_row += 1
                 possible_in_row = max(possible_in_row, match_in_row)
@@ -83,8 +81,7 @@ class Minimax:
             gameboard = deepcopy(self.gamestate)
             if len(self.gamestate[picked_move]) < self.height:
                 gameboard[picked_move].append(self.symbol)
-                evaluation = Minimax(gameboard, self.symbol,
-                                     [self.height, self.width], False)
+                evaluation = Minimax(gameboard, self.symbol, [self.height, self.width], False)
                 if evaluation.points > highest_evaluation:
                     highest_evaluation = evaluation.points
                     best_move = picked_move

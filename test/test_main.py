@@ -64,8 +64,7 @@ class TestCases(unittest.TestCase):
         # Then:     The number 2 should be returned, as the coordinate has 2 matching
         #           symbols in a row in the given direction
         expected_result = 2
-        self.assertEqual(
-            expected_result, self.game_two.direction_check([-1, 0], "X", [5, 1]))
+        self.assertEqual(expected_result, self.game_two.direction_check([-1, 0], "X", [5, 1]))
 
 
 if __name__ == "__main__":
