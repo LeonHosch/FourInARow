@@ -26,6 +26,7 @@ the second player in column 5 again and so on.
 
 class History:
     """Class to manage game history"""
+
     def __init__(self):
         """Initialize the history list"""
         self.moves = []
