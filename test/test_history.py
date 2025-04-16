@@ -5,6 +5,7 @@ from history import History
 
 class TestHistory(unittest.TestCase):
     """Test cases for the History class"""
+
     def setUp(self):
         """Set up a new history instance before each test"""
         self.history = History()
