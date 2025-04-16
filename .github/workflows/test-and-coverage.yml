@@ -42,5 +42,4 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          pdm run pytest -v --cov=.
-
+          pdm run pytest -v --cov=. --cov-report=html --cov-report=term-missing $(git ls-files '*.py')
