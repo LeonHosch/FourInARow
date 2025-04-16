@@ -2,6 +2,7 @@
 
 import random
 from copy import deepcopy
+
 from engine import bot_minimax
 
 
@@ -45,14 +46,14 @@ class FourInARow:
         print(" -----------------------")
 
     def gameplay(self):
-        """ gameplay loop of our connect-four game """
+        """gameplay loop of our connect-four game"""
         maxmoves = self.width * self.height
         for counter in range(maxmoves):
             if counter % 2:
                 symbol = "X"
                 gamestate = deepcopy(self.matrix)
                 minimax = bot_minimax.Minimax(
-                    gamestate, symbol, self.height, self.width)
+                    gamestate, symbol, [self.height, self.width])
                 column = minimax.best_move
                 self.print_playfield()
                 if len(self.matrix[column]) >= self.height:
@@ -101,7 +102,7 @@ class FourInARow:
         return False
 
     def direction_check(self, direction, symbol, coordinates):
-        """ check the given direction for matching symbols """
+        """check the given direction for matching symbols"""
         result = 0
         while True:
             coordinates[0] += direction[0]
@@ -118,7 +119,7 @@ class FourInARow:
                 return result
 
     def bot_play(self):
-        """ the AI of the bot player """
+        """the AI of the bot player"""
         while True:
             move = random.randint(0, 6)
             if len(self.matrix[move]) < self.height:

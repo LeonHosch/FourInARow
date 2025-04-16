@@ -1,8 +1,8 @@
 """
 This module contains the configuration settings for the game engine."""
 
-import sys
 import os
+import sys
 
 # Add the module's directory to the system path
 module_path = os.path.dirname(os.path.abspath(__file__))
