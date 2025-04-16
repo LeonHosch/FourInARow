@@ -33,7 +33,7 @@ class FourInARow:
         """prints the matrix so the player can see what the playfield looks like
         with the current moves shown on the board"""
         print(" -----------------------")
-        for x_coordinate in range(self.height-1, -1, -1):
+        for x_coordinate in range(self.height - 1, -1, -1):
             print("|", end="  ")
             for entry in self.matrix:
                 try:
@@ -53,7 +53,8 @@ class FourInARow:
                 symbol = "X"
                 gamestate = deepcopy(self.matrix)
                 minimax = bot_minimax.Minimax(
-                    gamestate, symbol, [self.height, self.width])
+                    gamestate, symbol, [self.height, self.width]
+                )
                 column = minimax.best_move
                 self.print_playfield()
                 if len(self.matrix[column]) >= self.height:
@@ -65,8 +66,7 @@ class FourInARow:
                 print(f"Where do you want to put an {symbol}?")
 
                 while True:
-                    column = intsafeinput(
-                        f"Choose column from 1 to {self.width}: ") - 1
+                    column = intsafeinput(f"Choose column from 1 to {self.width}: ") - 1
                     if column == -1:
                         return
                     try:
@@ -79,7 +79,7 @@ class FourInARow:
             self.matrix[column].append(symbol)
             self.print_playfield()
             print(self.matrix)
-            if self.win_test([column, len(self.matrix[column])-1], symbol):
+            if self.win_test([column, len(self.matrix[column]) - 1], symbol):
                 print(f"The player with the symbol '{symbol}' won the game!")
                 return
 
@@ -90,7 +90,8 @@ class FourInARow:
         previous = 0
         for direction in directions:
             win_con = self.direction_check(
-                direction, symbol, [coordinates[0], coordinates[1]])
+                direction, symbol, [coordinates[0], coordinates[1]]
+            )
             if win_con + previous >= 3:
                 return True
             if counter % 2:
