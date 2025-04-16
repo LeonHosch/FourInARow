@@ -31,13 +31,13 @@ pdm update
 Run the unit tests only.
 
 ```bat
-pdm run pytest -v history.py test\test_history.py
+pdm run pytest -v $(git ls-files '*.py')
 ```
 
-Run the unit tests and show line coverage.
+Run the unit tests and show line coverage, uncovered/missing lines and generate HTML report.
 
 ```bat
-pdm run pytest -v --cov=. history.py test\test_history.py
+pdm run pytest -v --cov=. --cov-report=html --cov-report=term-missing $(git ls-files '*.py')
 ```
 
 Actually play the game.
