@@ -1,6 +1,5 @@
 """Unit tests for the four in a row game"""
 
-
 import unittest
 
 import four_in_a_row
@@ -9,11 +8,25 @@ import four_in_a_row
 class TestCases(unittest.TestCase):
     """Class used to house the test cases"""
 
-    def setUp(self):    # pylint: disable=invalid-name
-        matrix_one = [[], ['O', 'X'], ['O', 'O'], [
-            'O', 'X', 'O'], ['X', 'X', 'X', 'O'], ['X'], []]
-        matrix_two = [[], ['O', 'X'], ['O', 'O'], [
-            'O', 'X', 'O'], ['X', 'X', 'O'], ['X', 'X'], []]
+    def setUp(self):  # pylint: disable=invalid-name
+        matrix_one = [
+            [],
+            ["O", "X"],
+            ["O", "O"],
+            ["O", "X", "O"],
+            ["X", "X", "X", "O"],
+            ["X"],
+            [],
+        ]
+        matrix_two = [
+            [],
+            ["O", "X"],
+            ["O", "O"],
+            ["O", "X", "O"],
+            ["X", "X", "O"],
+            ["X", "X"],
+            [],
+        ]
         self.game_one = four_in_a_row.FourInARow(matrix_one)
         self.game_two = four_in_a_row.FourInARow(matrix_two)
 
@@ -64,7 +77,9 @@ class TestCases(unittest.TestCase):
         # Then:     The number 2 should be returned, as the coordinate has 2 matching
         #           symbols in a row in the given direction
         expected_result = 2
-        self.assertEqual(expected_result, self.game_two.direction_check([-1, 0], "X", [5, 1]))
+        self.assertEqual(
+            expected_result, self.game_two.direction_check([-1, 0], "X", [5, 1])
+        )
 
 
 if __name__ == "__main__":

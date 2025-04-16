@@ -81,7 +81,9 @@ class Minimax:
             gameboard = deepcopy(self.gamestate)
             if len(self.gamestate[picked_move]) < self.height:
                 gameboard[picked_move].append(self.symbol)
-                evaluation = Minimax(gameboard, self.symbol, [self.height, self.width], False)
+                evaluation = Minimax(
+                    gameboard, self.symbol, [self.height, self.width], False
+                )
                 if evaluation.points > highest_evaluation:
                     highest_evaluation = evaluation.points
                     best_move = picked_move

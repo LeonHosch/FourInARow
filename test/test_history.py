@@ -1,4 +1,5 @@
 """Test cases for the History class in game history management."""
+
 import unittest
 
 from history import History
