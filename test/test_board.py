@@ -1,4 +1,5 @@
 """Testing the Board class for Connect Four game."""
+
 import unittest
 
 from board import Board
