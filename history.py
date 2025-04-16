@@ -23,31 +23,32 @@ then in second full-move the first player in column 3 again, followed by
 the second player in column 5 again and so on.
 """
 
+from typing import List
+
 
 class History:
     """Class to manage game history"""
-
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the history list"""
-        self.moves = []
+        self.moves: List[List[int]] = []
 
-    def add_ply(self, column):
-        """Add a Ply (a single half-move) to the history"""
+    def add_ply(self, column: int) -> None:
+        """Add a Ply (a single half-move) to the history
+
+        :param column: The column index where the piece was dropped."""
         if not self.moves or len(self.moves[-1]) == 2:
             self.moves.append([column])
         else:
             self.moves[-1].append(column)
 
-    def undo_last_full_move(self):
+    def undo_last_full_move(self) -> None:
         """Undo the last full-move (two Plies)"""
         if self.moves:
             if len(self.moves[-1]) == 2:
                 self.moves.pop()
             elif len(self.moves[-1]) == 1:
                 self.moves.pop()
-                if self.moves:
-                    self.moves.pop()
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Return a readable string representation of the history"""
         return " ".join(f"{i + 1}. {move}" for i, move in enumerate(self.moves))

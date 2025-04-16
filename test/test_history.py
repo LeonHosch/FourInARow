@@ -55,6 +55,14 @@ class TestHistory(unittest.TestCase):
         self.history.add_ply(5)
         self.assertEqual(str(self.history), "1. [3, 4] 2. [5]")
 
+    def test_undo_last_full_move_partial(self):
+        """Test undoing the last full move when the last move is incomplete"""
+        self.history.add_ply(3)
+        self.history.add_ply(4)
+        self.history.add_ply(5)  # Start a new full move but only add one ply
+        self.history.undo_last_full_move()
+        self.assertEqual(self.history.moves, [[3, 4]])
+
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main()  # pragma: no cover
