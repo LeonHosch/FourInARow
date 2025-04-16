@@ -28,6 +28,7 @@ from typing import List
 
 class History:
     """Class to manage game history"""
+
     def __init__(self) -> None:
         """Initialize the history list"""
         self.moves: List[List[int]] = []

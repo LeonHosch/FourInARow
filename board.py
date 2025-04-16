@@ -15,13 +15,14 @@ class Board:
         """
         self.rows: int = rows
         self.columns: int = columns
-        self.grid: list[list[str]] = [[' ' for _ in range(columns)]
-                                      for _ in range(rows)]
+        self.grid: list[list[str]] = [
+            [" " for _ in range(columns)] for _ in range(rows)
+        ]
 
     def drop_piece(self, column: int, piece: str) -> bool:
         """
         Drops a piece into the specified column.
-        
+
         :param column: The column index where the piece is dropped.
         :param piece: The piece to drop (e.g., 'X' or 'O').
         :return: True if the piece was successfully dropped, False otherwise.
@@ -29,7 +30,7 @@ class Board:
         if column < 0 or column >= self.columns:
             return False
         for row in reversed(range(self.rows)):
-            if self.grid[row][column] == ' ':
+            if self.grid[row][column] == " ":
                 self.grid[row][column] = piece
                 return True
         return False
@@ -41,7 +42,7 @@ class Board:
         :return: True if the board is full, False otherwise.
         """
         for row in self.grid:
-            if ' ' in row:
+            if " " in row:
                 return False
         return True
 
@@ -83,15 +84,15 @@ class Board:
         """
         range_columns: range = range(self.columns)
         range_rows: range = range(self.rows)
-        self.grid = [[' ' for _ in range_columns] for _ in range_rows]
+        self.grid = [[" " for _ in range_columns] for _ in range_rows]
 
     def __str__(self) -> str:
         """
         Returns a string representation of the board.
         """
-        board_str: str = ''
+        board_str: str = ""
         for row in self.grid:
-            board_str += '|'.join(row) + '\n'
-        board_str += '-' * (2 * self.columns - 1) + '\n'
-        board_str += ' '.join(map(str, range(self.columns))) + '\n'
+            board_str += "|".join(row) + "\n"
+        board_str += "-" * (2 * self.columns - 1) + "\n"
+        board_str += " ".join(map(str, range(self.columns))) + "\n"
         return board_str
