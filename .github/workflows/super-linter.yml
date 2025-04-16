@@ -8,7 +8,9 @@ name: SuperLinter
 
 on: workflow_dispatch
 
-permissions: read-all
+permissions:
+  contents: read
+  statuses: write
 
 jobs:
   run-lint:
