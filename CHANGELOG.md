@@ -12,19 +12,19 @@ Next sections are ordered by tags used in the repository.
 * create AUTHORS, LICENSE, CHANGELOG, README.md
 * pip requirements.txt (to point to pdm with standard Python tools)
 * pdm (package and dependency management, configuration management of Python packages)
-   * for all other Python packages than PDM itself
+  * for all other Python packages than PDM itself
 * introduce unittest, Pytest
-   * sample set up in Visual Studio Code
+  * sample set up in Visual Studio Code
 * coverage analysis (line coverage, branch coverage, function coverage, module coverage)
 * Dependabot (Vulnerability alerts, invalid / insecure tooling, baseline configuration checking)
 * application debugging (prefer debugpy over deprecated python debugger)
-   * [Visual Studio Code](https://code.visualstudio.com/docs/python/debugging)
-   * launch.json : "type": "debugpy" instead "type": "python"
+  * [Visual Studio Code](https://code.visualstudio.com/docs/python/debugging)
+  * launch.json : "type": "debugpy" instead "type": "python"
 * SW Architecture
-   * module splitting
-      * move generator (legal moves)
-      * separate player or engine interface
-      * game history (iterate through history to replay)
+  * module splitting
+    * move generator (legal moves)
+    * separate player or engine interface
+    * game history (iterate through history to replay)
 
 ## linter_as_github_action
 (2025-04-03, 1c2c00c111367bdeafd9506a1510e01b1de8dfa1)
