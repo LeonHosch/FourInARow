@@ -1,6 +1,10 @@
 # .github/workflows/test-and-coverage.yml
 name: Test and Coverage
 
+permissions:
+  contents: read
+  statuses: write
+
 on:
   push:
     branches: [ "main" ]
