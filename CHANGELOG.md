@@ -4,6 +4,14 @@ The file collects the changelog in anti chronological listing.
 First section lists untagged achievements.
 Next sections are ordered by tags used in the repository.
 
+## Untagged Achievements
+
+- SuperLinter (not just Linting, add Code Formatters) as a GitHub action
+  - Pylint, Black, Flake8, Ruff, Linting MD, toml, json, yaml, jscpd, ...
+  - include SuperLinter as a badge in README reflecting the current status
+- run tests and coverage analysis as a GitHub action
+  - Code Coverage badge and Test badge in README reflecting the current status
+
 ## package_dependency_management_swa_debug_test
 
 (2025-04-15, d40c0ce4c9e5ab97f72e98f27e0168c4bda74570)
