@@ -1,12 +1,12 @@
 """A simple console-based Connect Four game in Python"""
 
-import random
 from copy import deepcopy
 
-from engine import bot_minimax
+from engine import ai_minimax
+from engine import ai_random
 
 
-def intsafeinput(text):
+def intsafeinput(text) -> int:
     """Function which is used to safely get an integer input"""
     while True:
         try:
@@ -19,7 +19,7 @@ def intsafeinput(text):
 class FourInARow:
     """The game class containing the methods needed to run the game"""
 
-    def __init__(self, matrix=None):
+    def __init__(self, matrix=None) -> None:
         """Initializing the game class"""
         if matrix is None:
             self.matrix = [[], [], [], [], [], [], []]
@@ -29,7 +29,7 @@ class FourInARow:
         self.height = 6
         self.print_playfield()
 
-    def print_playfield(self):
+    def print_playfield(self) -> None:
         """prints the matrix so the player can see what the playfield looks like
         with the current moves shown on the board"""
         print(" -----------------------")
@@ -45,45 +45,25 @@ class FourInARow:
         print("|  1  2  3  4  5  6  7  |")
         print(" -----------------------")
 
-    def gameplay(self):
+    def gameplay(self) -> None:
         """gameplay loop of our connect-four game"""
         maxmoves = self.width * self.height
+        column = None
         for counter in range(maxmoves):
             if counter % 2:
                 symbol = "X"
-                gamestate = deepcopy(self.matrix)
-                minimax = bot_minimax.Minimax(
-                    gamestate, symbol, [self.height, self.width]
-                )
-                column = minimax.best_move
-                self.print_playfield()
-                if len(self.matrix[column]) >= self.height:
-                    print("Bot played an illegal move!")
-                # column = self.bot_play()
+                column = self.bot_move()
             else:
                 symbol = "O"
-
-                print(f"Where do you want to put an {symbol}?")
-
-                while True:
-                    column = intsafeinput(f"Choose column from 1 to {self.width}: ") - 1
-                    if column == -1:
-                        return
-                    try:
-                        if len(self.matrix[column]) < self.height:
-                            break
-                        print("Column is filled already!\n")
-                    except IndexError:
-                        print(f"There are only {self.width} columns!\n")
+                column = self.player_move()
 
             self.matrix[column].append(symbol)
             self.print_playfield()
-            print(self.matrix)
             if self.win_test([column, len(self.matrix[column]) - 1], symbol):
                 print(f"The player with the symbol '{symbol}' won the game!")
                 return
 
-    def win_test(self, coordinates, symbol):
+    def win_test(self, coordinates, symbol) -> bool:
         """check if the game has been won by adding up matching symbols in a row"""
         directions = [(-1, 0), (1, 0), (-1, -1), (1, 1), (1, -1), (-1, 1), (0, -1)]
         counter = 0
@@ -101,7 +81,7 @@ class FourInARow:
             counter += 1
         return False
 
-    def direction_check(self, direction, symbol, coordinates):
+    def direction_check(self, direction, symbol, coordinates) -> int:
         """check the given direction for matching symbols"""
         result = 0
         while True:
@@ -118,12 +98,29 @@ class FourInARow:
             else:
                 return result
 
-    def bot_play(self):
-        """the AI of the bot player"""
+    def player_move(self) -> int:
+        """Asking the player, which move he wants to take"""
+        symbol = "O"
+        print(f"Where do you want to put an {symbol}?")
+
         while True:
-            move = random.randint(0, 6)
-            if len(self.matrix[move]) < self.height:
-                return move
+            column = intsafeinput(f"Choose column from 1 to {self.width}: ") - 1
+            try:
+                if len(self.matrix[column]) < self.height:
+                    return column
+                print("Column is filled already!\n")
+            except IndexError:
+                print(f"There are only {self.width} columns!\n")
+
+    def bot_move(self) -> int:
+        """Getting the move made by the ai player"""
+        symbol = "X"
+        gamestate = deepcopy(self.matrix)
+        random = ai_random.Random(gamestate, symbol, [self.height, self.width])
+        column = random.random_move
+        minimax = ai_minimax.Minimax(gamestate, symbol, [self.height, self.width])
+        column = minimax.best_move
+        return column
 
 
 if __name__ == "__main__":
