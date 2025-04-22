@@ -7,7 +7,7 @@ from random import randint
 class Minimax:
     """The computer minimax player"""
 
-    def __init__(self, gamestate, symbol, boardsize, repeat=True):
+    def __init__(self, gamestate, symbol, boardsize, repeat=True) -> None:
         """Initializing the class for the needed parameters"""
         self.gamestate = gamestate
         self.points = 0
@@ -18,19 +18,19 @@ class Minimax:
         self.best_move = None
         self.minimax_logic()
 
-    def minimax_logic(self):
+    def minimax_logic(self) -> None:
         """Either execute simulate_move or evaluate_board based on self.repeat"""
         if self.repeat:
             self.simulate_move()
         else:
             self.evaluate_board()
 
-    def evaluate_board(self):
+    def evaluate_board(self) -> None:
         """Check the board, evaluate and assign points accordingly"""
         self.points += self.check_vertical()
         self.points += self.check_horizontal()
 
-    def check_vertical(self):
+    def check_vertical(self) -> int:
         """Check the board and give points checking the y axis"""
         for column in self.gamestate:
             remaining_plays = 6 - len(column)
@@ -43,7 +43,7 @@ class Minimax:
                 return -8
             return match_in_row * match_in_row
 
-    def check_horizontal(self):
+    def check_horizontal(self) -> int:
         """Check the board and give points checking the x axis"""
         for row in range(self.height):
             previous = None
@@ -65,7 +65,7 @@ class Minimax:
                 return -8
             return match_in_row * match_in_row
 
-    def check_match(self, previous, entry, match_in_row):
+    def check_match(self, previous, entry, match_in_row) -> int:
         """Checks if the given symbol is given multiple times in a row"""
         if self.symbol == previous == entry:
             return match_in_row + 1
@@ -73,7 +73,7 @@ class Minimax:
             return match_in_row
         return 0
 
-    def simulate_move(self):
+    def simulate_move(self) -> None:
         """Simulating future board states"""
         highest_evaluation = 0
         best_move = randint(0, 6)
