@@ -154,7 +154,7 @@ if __name__ == "__main__":
         game: FourInARow = FourInARow()
     else:
         settings = custom_game()
-        game: FourInARow = FourInARow(settings[0], settings[1], settings[2])
+        game = FourInARow(settings[0], settings[1], settings[2])
 
     game.gameplay()
     print("Thanks for playing!")
