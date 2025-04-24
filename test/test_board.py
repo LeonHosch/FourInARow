@@ -2,7 +2,7 @@
 
 import unittest
 
-from board import Board
+from classes.board import Board
 
 
 def test_board_initialization():

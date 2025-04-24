@@ -92,7 +92,6 @@ class FourInARow:
         if self.win_test([column, replace_position]):
             print(f"The player with the symbol '{symbol}' won the game!")
             self.is_finished = True
-            return
 
     def check_finished(self) -> None:
         """Checks if all the possible moves have been played already"""
