@@ -136,6 +136,6 @@ class FourInARow:
 
 
 if __name__ == "__main__":
-    game: object = FourInARow()
+    game: FourInARow = FourInARow()
     game.gameplay()
     print("Thanks for playing!")

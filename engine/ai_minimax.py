@@ -21,7 +21,6 @@ class Minimax:
         self.height: int = boardsize[0]
         self.width: int = boardsize[1]
         self.repeat: bool = repeat
-        self.best_move: int | None = None
         self.minimax_logic()
 
     def minimax_logic(self) -> None:
@@ -101,4 +100,4 @@ class Minimax:
                 if evaluation.points > highest_evaluation:
                     highest_evaluation = evaluation.points
                     best_move = picked_move
-        self.best_move = best_move
+        self.best_move: int = best_move
