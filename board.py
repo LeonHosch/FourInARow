@@ -18,6 +18,13 @@ class Board:
         self.grid: list[list[str]] = [
             [" " for _ in range(columns)] for _ in range(rows)
         ]
+        self.current_player: int = 1  # Current player (1 or -1)
+
+    def switch_player(self) -> None:
+        """
+        Switches the current player.
+        """
+        self.current_player *= -1  # Switch between 1 and -1
 
     def drop_piece(self, column: int, piece: str) -> bool:
         """
