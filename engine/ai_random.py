@@ -15,7 +15,7 @@ class Random:
         self.symbol = symbol
         self.height = boardsize[0]
         self.width = boardsize[1]
-        self.random_move = self.bot_random()
+        self.botstarter()
 
     def bot_random(self) -> int:
         """the AI of the bot player"""
@@ -23,3 +23,7 @@ class Random:
             move = random.randint(0, self.width)
             if len(self.gamestate[move]) < self.height:
                 return move
+
+    def botstarter(self) -> None:
+        """Pylint shouldnt be complaining that this class only has 1 method :)"""
+        self.random_move = self.bot_random()
