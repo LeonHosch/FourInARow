@@ -82,7 +82,7 @@ class Minimax:
             return match_in_row
         return 0
 
-    def simulate_move(self) -> None:
+    def simulate_move(self) -> int:
         """Simulating future board states"""
         highest_evaluation: int = 0
         best_move: int = randint(0, 6)
