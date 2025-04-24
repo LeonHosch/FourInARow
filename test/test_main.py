@@ -5,6 +5,13 @@ import unittest
 import four_in_a_row
 
 
+def game_with_matrix(matrix: list[list[str]]) -> four_in_a_row.FourInARow:
+    """Creating objects with the given matrix"""
+    game = four_in_a_row.FourInARow()
+    game.load_board(matrix)
+    return game
+
+
 class TestCases(unittest.TestCase):
     """Class used to house the test cases"""
 
@@ -27,10 +34,8 @@ class TestCases(unittest.TestCase):
             ["X", "X", "-", "-", "-", "-"],
             ["-", "-", "-", "-", "-", "-"],
         ]
-        self.game_one = four_in_a_row.FourInARow()
-        self.game_one.load_board(matrix_one)
-        self.game_two = four_in_a_row.FourInARow()
-        self.game_two.load_board(matrix_two)
+        self.game_one = game_with_matrix(matrix_one)
+        self.game_two = game_with_matrix(matrix_two)
 
     def test_win(self):
         """Test if the given gameboard with given input is won or not"""
