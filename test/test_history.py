@@ -2,7 +2,7 @@
 
 import unittest
 
-from history import History
+from classes.history import History
 
 
 class TestHistory(unittest.TestCase):

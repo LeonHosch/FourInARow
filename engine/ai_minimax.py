@@ -15,7 +15,7 @@ class Minimax:
         repeat: bool = True,
     ) -> None:
         """Initializing the class for the needed parameters"""
-        self.gamestate: list[list[str]] = gamestate
+        self.gamestate: list[list[str]] = deepcopy(gamestate)
         self.points: int = 0
         self.symbol: str = symbol
         self.height: int = boardsize[0]
@@ -87,7 +87,7 @@ class Minimax:
         highest_evaluation: int = 0
         best_move: int = randint(0, 6)
         for picked_move in range(self.width):
-            gameboard = deepcopy(self.gamestate)
+            gameboard = self.gamestate
             if len(self.gamestate[picked_move]) < self.height:
                 gameboard[picked_move].append(self.symbol)
                 evaluation = Minimax(

@@ -1,69 +1,111 @@
 """A simple console-based Connect Four game in Python"""
 
-from copy import deepcopy
+from random import randint
+from time import sleep
 
-from engine import ai_minimax, ai_random
+from classes import safe_inputs as Safe
+from classes.show_board import ShowBoard
 
 
-def intsafeinput(text: str) -> int:
-    """Function which is used to safely get an integer input"""
+def custom_game() -> list[int]:
+    """Create a game with custom parameters"""
     while True:
-        try:
-            integer: int = int(input(text))
-            return integer
-        except ValueError:
-            print("Integer input expected\n")
+        width: int = Safe.int_safe_input(
+            "How many columns do you want to have: ", 4, 20
+        )
+        height: int = Safe.int_safe_input(
+            "How high do you want the rows to be: ", 4, 20
+        )
+        win_condition: int = Safe.int_safe_input(
+            "How many in a row should be needed to win: ", 3, max(width, height)
+        )
+        return [width, height, win_condition]
 
 
 class FourInARow:
     """The game class containing the methods needed to run the game"""
 
-    def __init__(self, matrix=None) -> None:
+    def __init__(self, width: int = 7, height: int = 6, win_condition: int = 4) -> None:
         """Initializing the game class"""
-        if matrix is None:
-            self.matrix: list[list[str]] = [[], [], [], [], [], [], []]
-        else:
-            self.matrix = matrix
-        self.width: int = len(self.matrix)
-        self.height: int = 6
-        self.print_playfield()
+        self.width: int = width
+        self.height: int = height
+        self.win_condition: int = win_condition - 1
+        self.matrix: list[list[str]] = [
+            ["-" for _ in range(height)] for _ in range(width)
+        ]
+        self.board: ShowBoard = ShowBoard(self.matrix, width, height)
+        self.is_finished: bool = False
+        self.out_of_moves = False
 
-    def print_playfield(self) -> None:
-        """prints the matrix so the player can see what the playfield looks like
-        with the current moves shown on the board"""
-        print(" -----------------------")
-        for x_coordinate in range(self.height - 1, -1, -1):  # x_coordinate: list[str]
-            print("|", end="  ")
-            for entry in self.matrix:  # entry: str
-                try:
-                    print(entry[x_coordinate], end="  ")
-                except IndexError:
-                    print("-", end="  ")
-            print("|")
-        print("| --------------------- |")
-        print("|  1  2  3  4  5  6  7  |")
-        print(" -----------------------")
+    def load_board(self, newmatrix: list[list[str]]) -> None:
+        """can load a custom matrix into the game"""
+        if len(newmatrix) >= 1:
+            self.matrix = newmatrix
+            self.board.change_values(len(self.matrix), len(self.matrix[0]), self.matrix)
 
     def gameplay(self) -> None:
         """gameplay loop of our connect-four game"""
-        maxmoves: int = self.width * self.height
-        column: int | None = None
-        for counter in range(maxmoves):  # counter: int
-            if counter % 2:
-                symbol: str = "X"
-                column = self.bot_move()
+        counter = randint(1, 2)
+        while not self.is_finished:  # counter: int
+            if counter == 1:
+                sleep(2)
+                self.bot_move()
+                counter = 2
             else:
-                symbol = "O"
-                column = self.player_move()
+                self.player_move()
+                counter = 1
+            self.check_finished()
+        if self.out_of_moves:
+            print("The game ended in a draw!")
 
-            self.matrix[column].append(symbol)
-            self.print_playfield()
-            if self.win_test([column, len(self.matrix[column]) - 1], symbol):
-                print(f"The player with the symbol '{symbol}' won the game!")
+    def player_move(self) -> None:
+        """Asking the player, which move he wants to take"""
+        symbol: str = "O"
+        print(f"Where do you want to put an {symbol}?")
+        while True:
+            column: int = (
+                Safe.int_safe_input(
+                    f"Choose column from 1 to {self.width}: ", 1, self.width
+                )
+                - 1
+            )
+            if "-" in self.matrix[column]:
+                self.place_symbol(column, symbol)
                 return
 
-    def win_test(self, coordinates, symbol) -> bool:
+    def bot_move(self) -> None:
+        """Getting the move made by the ai player"""
+        symbol: str = "X"
+        gamestate: list = self.matrix
+        randomai: ai_random.Random = ai_random.Random(
+            gamestate, symbol, [self.height, self.width]
+        )
+        column: int = randomai.random_move
+        self.place_symbol(column, symbol)
+
+    def place_symbol(self, column, symbol: str) -> None:
+        """Remove the first '-' in the list and replace it with the symbol"""
+        replace_position: int = self.matrix[column].index("-")
+        self.matrix[column].remove("-")
+        self.matrix[column].insert(replace_position, symbol)
+
+        self.board.print_playfield(self.matrix)
+        if self.win_test([column, replace_position]):
+            print(f"The player with the symbol '{symbol}' won the game!")
+            self.is_finished = True
+            return
+
+    def check_finished(self) -> None:
+        """Checks if all the possible moves have been played already"""
+        for column in self.matrix:
+            if "-" in column:
+                return
+        self.is_finished = True
+        self.out_of_moves = True
+
+    def win_test(self, coordinates) -> bool:
         """check if the game has been won by adding up matching symbols in a row"""
+        symbol: str = self.matrix[coordinates[0]][coordinates[1]]
         directions: list = [
             (-1, 0),
             (1, 0),
@@ -79,7 +121,7 @@ class FourInARow:
             win_con: int = self.direction_check(
                 direction, symbol, [coordinates[0], coordinates[1]]
             )
-            if win_con + previous >= 3:
+            if win_con + previous >= self.win_condition:
                 return True
             if counter % 2:
                 previous = 0
@@ -95,7 +137,7 @@ class FourInARow:
             coordinates[0] += direction[0]
             coordinates[1] += direction[1]
             if self.width > coordinates[0] >= 0:
-                if len(self.matrix[coordinates[0]]) > coordinates[1] >= 0:
+                if self.height > coordinates[1] >= 0:
                     if self.matrix[coordinates[0]][coordinates[1]] == symbol:
                         result += 1
                     else:
@@ -105,37 +147,16 @@ class FourInARow:
             else:
                 return result
 
-    def player_move(self) -> int:
-        """Asking the player, which move he wants to take"""
-        symbol: str = "O"
-        print(f"Where do you want to put an {symbol}?")
-
-        while True:
-            column: int = intsafeinput(f"Choose column from 1 to {self.width}: ") - 1
-            try:
-                if len(self.matrix[column]) < self.height:
-                    return column
-                print("Column is filled already!\n")
-            except IndexError:
-                print(f"There are only {self.width} columns!\n")
-
-    def bot_move(self) -> int:
-        """Getting the move made by the ai player"""
-        symbol: str = "X"
-        gamestate: list = deepcopy(self.matrix)
-        randomai: ai_random.Random = ai_random.Random(
-            gamestate, symbol, [self.height, self.width]
-        )
-        column: int = randomai.random_move
-        gamestate = deepcopy(self.matrix)
-        minimax: ai_minimax.Minimax = ai_minimax.Minimax(
-            gamestate, symbol, [self.height, self.width]
-        )
-        column = minimax.best_move
-        return column
-
 
 if __name__ == "__main__":
-    game: FourInARow = FourInARow()
+    gamemode: int = Safe.int_safe_input(
+        "Which gamemode do you want to play?\n1) Standard\n2) Custom\nInput: ", 1, 2
+    )
+    if gamemode == 1:
+        game: FourInARow = FourInARow()
+    else:
+        settings = custom_game()
+        game: FourInARow = FourInARow(settings[0], settings[1], settings[2])
+
     game.gameplay()
     print("Thanks for playing!")
