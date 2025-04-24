@@ -6,7 +6,9 @@ import random
 class Random:
     """The class for the random AI player"""
 
-    def __init__(self, gamestate, symbol, boardsize) -> None:
+    def __init__(
+        self, gamestate: list[list[str]], symbol: str, boardsize: list[int]
+    ) -> None:
         """Initializing the class for the needed parameters"""
         self.gamestate = gamestate
         self.points = 0

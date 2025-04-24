@@ -7,15 +7,21 @@ from random import randint
 class Minimax:
     """The computer minimax player"""
 
-    def __init__(self, gamestate, symbol, boardsize, repeat=True) -> None:
+    def __init__(
+        self,
+        gamestate: list[list[str]],
+        symbol: str,
+        boardsize: list[int],
+        repeat: bool = True,
+    ) -> None:
         """Initializing the class for the needed parameters"""
-        self.gamestate = gamestate
-        self.points = 0
-        self.symbol = symbol
-        self.height = boardsize[0]
-        self.width = boardsize[1]
-        self.repeat = repeat
-        self.best_move = None
+        self.gamestate: list[list[str]] = gamestate
+        self.points: int = 0
+        self.symbol: str = symbol
+        self.height: int = boardsize[0]
+        self.width: int = boardsize[1]
+        self.repeat: bool = repeat
+        self.best_move: int = None
         self.minimax_logic()
 
     def minimax_logic(self) -> None:
@@ -32,29 +38,29 @@ class Minimax:
 
     def check_vertical(self) -> int:
         """Check the board and give points checking the y axis"""
-        for column in self.gamestate:
-            remaining_plays = 6 - len(column)
-            previous = None
-            match_in_row = 0
-            for matrix_value in column:
+        for column in self.gamestate:  # list[str]
+            remaining_plays: int = 6 - len(column)
+            previous: int | None = None
+            match_in_row: int = 0
+            for matrix_value in column:  # matrix_value: str
                 match_in_row = self.check_match(previous, matrix_value, match_in_row)
                 previous = matrix_value
             if remaining_plays + match_in_row < 3:
                 return -8
-            return match_in_row * match_in_row
+            return int(match_in_row * match_in_row)
 
     def check_horizontal(self) -> int:
         """Check the board and give points checking the x axis"""
         for row in range(self.height):
-            previous = None
-            previous_in_row = 0
-            match_in_row = 0
-            possible_in_row = 0
-            for column in self.gamestate:
+            previous: int | None = None
+            previous_in_row: int = 0
+            match_in_row: int = 0
+            possible_in_row: int = 0
+            for column in self.gamestate:  # column: list[str]
                 try:
-                    matrix_value = column[row]
+                    matrix_value: str | None = column[row]
                 except IndexError:
-                    matrix_value = None
+                    matrix_value: str | None = None
                 match_in_row = self.check_match(previous, matrix_value, match_in_row)
                 if previous_in_row == match_in_row > 0:
                     possible_in_row += 1
@@ -63,9 +69,9 @@ class Minimax:
                 previous = matrix_value
             if possible_in_row < 3:
                 return -8
-            return match_in_row * match_in_row
+            return int(match_in_row * match_in_row)
 
-    def check_match(self, previous, entry, match_in_row) -> int:
+    def check_match(self, previous: str, entry: str, match_in_row: int) -> int:
         """Checks if the given symbol is given multiple times in a row"""
         if self.symbol == previous == entry:
             return match_in_row + 1
