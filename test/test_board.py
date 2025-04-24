@@ -316,5 +316,24 @@ def test_board_str_with_pieces():
     assert str(board) == expected_output
 
 
+def test_switch_player():
+    """Test switching the current player.
+
+    Feature: Switching players
+
+    Scenario: Switch the current player
+
+    Given the game starts and the current player is initialized to 1
+    When the switch_player method is called
+    Then it should toggle the current player between 1 and -1.
+    """
+    board = Board()
+    assert board.current_player == 1  # Initial player
+    board.switch_player()
+    assert board.current_player == -1  # After first switch
+    board.switch_player()
+    assert board.current_player == 1  # After second switch
+
+
 if __name__ == "__main__":
     unittest.main()  # pragma: no cover
