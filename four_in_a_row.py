@@ -123,12 +123,12 @@ class FourInARow:
         """Getting the move made by the ai player"""
         symbol: str = "X"
         gamestate: list = deepcopy(self.matrix)
-        randomai: object = ai_random.Random(
+        randomai: ai_random.Random = ai_random.Random(
             gamestate, symbol, [self.height, self.width]
         )
         column: int = randomai.random_move
         gamestate = deepcopy(self.matrix)
-        minimax: object = ai_minimax.Minimax(
+        minimax: ai_minimax.Minimax = ai_minimax.Minimax(
             gamestate, symbol, [self.height, self.width]
         )
         column = minimax.best_move
