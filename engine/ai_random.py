@@ -20,8 +20,8 @@ class Random:
     def bot_random(self) -> int:
         """the AI of the bot player"""
         while True:
-            move = random.randint(0, self.width)
-            if len(self.gamestate[move]) < self.height:
+            move = random.randint(0, self.width - 1)
+            if "-" in self.gamestate[move]:
                 return move
 
     def botstarter(self) -> None:
