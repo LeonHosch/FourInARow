@@ -87,9 +87,7 @@ class FourInARow:
     def place_symbol(self, column, symbol: str) -> None:
         """Remove the first '-' in the list and replace it with the symbol"""
         replace_position: int = self.matrix[column].index("-")
-        self.matrix[column].remove("-")
-        self.matrix[column].insert(replace_position, symbol)
-
+        self.matrix[column][replace_position] = symbol
         self.board.print_playfield(self.matrix)
         if self.win_test([column, replace_position]):
             print(f"The player with the symbol '{symbol}' won the game!")

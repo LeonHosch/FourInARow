@@ -10,25 +10,27 @@ class TestCases(unittest.TestCase):
 
     def setUp(self):  # pylint: disable=invalid-name
         matrix_one = [
-            [],
-            ["O", "X"],
-            ["O", "O"],
-            ["O", "X", "O"],
-            ["X", "X", "X", "O"],
-            ["X"],
-            [],
+            ["-", "-", "-", "-", "-", "-"],
+            ["O", "X", "-", "-", "-", "-"],
+            ["O", "O", "-", "-", "-", "-"],
+            ["O", "X", "O", "-", "-", "-"],
+            ["X", "X", "X", "O", "-", "-"],
+            ["X", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-"],
         ]
         matrix_two = [
-            [],
-            ["O", "X"],
-            ["O", "O"],
-            ["O", "X", "O"],
-            ["X", "X", "O"],
-            ["X", "X"],
-            [],
+            ["-", "-", "-", "-", "-", "-"],
+            ["O", "X", "-", "-", "-", "-"],
+            ["O", "O", "-", "-", "-", "-"],
+            ["O", "X", "O", "-", "-", "-"],
+            ["X", "X", "O", "-", "-", "-"],
+            ["X", "X", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-"],
         ]
-        self.game_one = four_in_a_row.FourInARow(matrix_one)
-        self.game_two = four_in_a_row.FourInARow(matrix_two)
+        self.game_one = four_in_a_row.FourInARow()
+        self.game_one.load_board(matrix_one)
+        self.game_two = four_in_a_row.FourInARow()
+        self.game_two.load_board(matrix_two)
 
     def test_win(self):
         """Test if the given gameboard with given input is won or not"""
@@ -45,7 +47,7 @@ class TestCases(unittest.TestCase):
         # Then:     True should be returned, which will end the game and
         #           notify the player O that he has won
         game_one_outcome = True
-        self.assertEqual(game_one_outcome, self.game_one.win_test([3, 2], "O"))
+        self.assertEqual(game_one_outcome, self.game_one.win_test([3, 2]))
 
         # Given:    A gameboard in following state:
         #            -----------------------
@@ -59,7 +61,7 @@ class TestCases(unittest.TestCase):
         # When:     Gameboard is checked at coordinates [5, 1] using the win_test method
         # Then:     False should be returned and the game will keep going as no one has won yet
         game_two_outcome = False
-        self.assertEqual(game_two_outcome, self.game_two.win_test([5, 1], "X"))
+        self.assertEqual(game_two_outcome, self.game_two.win_test([5, 1]))
 
     def test_direction_check(self):
         """Test the direction_check method of the Four in a row game"""
