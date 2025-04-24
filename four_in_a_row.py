@@ -2,11 +2,10 @@
 
 from copy import deepcopy
 
-from engine import ai_minimax
-from engine import ai_random
+from engine import ai_minimax, ai_random
 
 
-def intsafeinput(text) -> int:
+def intsafeinput(text: str) -> int:
     """Function which is used to safely get an integer input"""
     while True:
         try:
@@ -24,7 +23,7 @@ class FourInARow:
         if matrix is None:
             self.matrix: list[list[str]] = [[], [], [], [], [], [], []]
         else:
-            self.matrix: list[list[str]] = matrix
+            self.matrix = matrix
         self.width: int = len(self.matrix)
         self.height: int = 6
         self.print_playfield()
@@ -52,10 +51,10 @@ class FourInARow:
         for counter in range(maxmoves):  # counter: int
             if counter % 2:
                 symbol: str = "X"
-                column: int = self.bot_move()
+                column = self.bot_move()
             else:
-                symbol: str = "O"
-                column: int = self.player_move()
+                symbol = "O"
+                column = self.player_move()
 
             self.matrix[column].append(symbol)
             self.print_playfield()
@@ -128,11 +127,11 @@ class FourInARow:
             gamestate, symbol, [self.height, self.width]
         )
         column: int = randomai.random_move
-        gamestate: list = deepcopy(self.matrix)
+        gamestate = deepcopy(self.matrix)
         minimax: object = ai_minimax.Minimax(
             gamestate, symbol, [self.height, self.width]
         )
-        column: int = minimax.best_move
+        column = minimax.best_move
         return column
 
 

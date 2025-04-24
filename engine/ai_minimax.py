@@ -21,7 +21,7 @@ class Minimax:
         self.height: int = boardsize[0]
         self.width: int = boardsize[1]
         self.repeat: bool = repeat
-        self.best_move: int = None
+        self.best_move: int | None = None
         self.minimax_logic()
 
     def minimax_logic(self) -> None:
@@ -40,27 +40,31 @@ class Minimax:
         """Check the board and give points checking the y axis"""
         for column in self.gamestate:  # list[str]
             remaining_plays: int = 6 - len(column)
-            previous: int | None = None
+            previous: str | None = None
             match_in_row: int = 0
+            vertical_points: int = 0
             for matrix_value in column:  # matrix_value: str
                 match_in_row = self.check_match(previous, matrix_value, match_in_row)
                 previous = matrix_value
             if remaining_plays + match_in_row < 3:
-                return -8
-            return int(match_in_row * match_in_row)
+                vertical_points -= 8
+            else:
+                vertical_points += int(match_in_row * match_in_row)
+        return vertical_points
 
     def check_horizontal(self) -> int:
         """Check the board and give points checking the x axis"""
         for row in range(self.height):
-            previous: int | None = None
+            previous: str | None = None
             previous_in_row: int = 0
             match_in_row: int = 0
             possible_in_row: int = 0
+            horizontal_points: int = 0
             for column in self.gamestate:  # column: list[str]
                 try:
                     matrix_value: str | None = column[row]
                 except IndexError:
-                    matrix_value: str | None = None
+                    matrix_value = None
                 match_in_row = self.check_match(previous, matrix_value, match_in_row)
                 if previous_in_row == match_in_row > 0:
                     possible_in_row += 1
@@ -68,10 +72,14 @@ class Minimax:
                 previous_in_row = match_in_row
                 previous = matrix_value
             if possible_in_row < 3:
-                return -8
-            return int(match_in_row * match_in_row)
+                horizontal_points -= 8
+            else:
+                horizontal_points += int(match_in_row * match_in_row)
+        return horizontal_points
 
-    def check_match(self, previous: str, entry: str, match_in_row: int) -> int:
+    def check_match(
+        self, previous: str | None, entry: str | None, match_in_row: int
+    ) -> int:
         """Checks if the given symbol is given multiple times in a row"""
         if self.symbol == previous == entry:
             return match_in_row + 1
