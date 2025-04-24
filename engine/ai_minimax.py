@@ -21,12 +21,8 @@ class Minimax:
         self.height: int = boardsize[0]
         self.width: int = boardsize[1]
         self.repeat: bool = repeat
-        self.minimax_logic()
-
-    def minimax_logic(self) -> None:
-        """Either execute simulate_move or evaluate_board based on self.repeat"""
         if self.repeat:
-            self.simulate_move()
+            self.best_move = self.simulate_move()
         else:
             self.evaluate_board()
 
@@ -88,8 +84,8 @@ class Minimax:
 
     def simulate_move(self) -> None:
         """Simulating future board states"""
-        highest_evaluation = 0
-        best_move = randint(0, 6)
+        highest_evaluation: int = 0
+        best_move: int = randint(0, 6)
         for picked_move in range(self.width):
             gameboard = deepcopy(self.gamestate)
             if len(self.gamestate[picked_move]) < self.height:
@@ -100,4 +96,4 @@ class Minimax:
                 if evaluation.points > highest_evaluation:
                     highest_evaluation = evaluation.points
                     best_move = picked_move
-        self.best_move: int = best_move
+        return best_move
