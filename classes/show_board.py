@@ -48,8 +48,8 @@ class ShowBoard:
 
     def change_values(self, width: int, height: int, matrix: list[list[str]]):
         """Change the board values"""
-        self.width: int = width
-        self.height: int = height
-        self.breaker: str = self.calculate_breaker()
-        self.column_numbers: str = self.calculate_column_numbers()
+        self.width = width
+        self.height = height
+        self.breaker = self.calculate_breaker()
+        self.column_numbers = self.calculate_column_numbers()
         self.print_playfield(matrix)
