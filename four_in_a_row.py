@@ -5,6 +5,7 @@ from time import sleep
 
 from classes import safe_inputs as Safe
 from classes.show_board import ShowBoard
+from engine import ai_random
 
 
 def custom_game() -> list[int]:
