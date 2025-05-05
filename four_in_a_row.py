@@ -5,6 +5,7 @@ from time import sleep
 
 from classes import safe_inputs as Safe
 from classes.show_board import ShowBoard
+from classes.history import History
 from engine import ai_random
 
 
@@ -37,6 +38,7 @@ class FourInARow:
         self.board: ShowBoard = ShowBoard(self.matrix, width, height)
         self.is_finished: bool = False
         self.out_of_moves = False
+        self.history = History()
 
     def load_board(self, newmatrix: list[list[str]]) -> None:
         """can load a custom matrix into the game"""
@@ -56,6 +58,7 @@ class FourInARow:
                 self.player_move()
                 counter = 1
             self.check_finished()
+            print(str(self.history))
         if self.out_of_moves:
             print("The game ended in a draw!")
 
@@ -72,6 +75,7 @@ class FourInARow:
             )
             if "-" in self.matrix[column]:
                 self.place_symbol(column, symbol)
+                self.history.add_ply(column)
                 return
 
     def bot_move(self) -> None:
@@ -83,6 +87,7 @@ class FourInARow:
         )
         column: int = randomai.random_move
         self.place_symbol(column, symbol)
+        self.history.add_ply(column)
 
     def place_symbol(self, column, symbol: str) -> None:
         """Remove the first '-' in the list and replace it with the symbol"""
