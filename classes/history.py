@@ -38,17 +38,18 @@ class History:
 
         :param column: The column index where the piece was dropped."""
         if not self.moves or len(self.moves[-1]) == 2:
-            self.moves.append([column])
+            self.moves.append([column + 1])
         else:
-            self.moves[-1].append(column)
+            self.moves[-1].append(column + 1)
 
     def undo_last_full_move(self) -> None:
         """Undo the last full-move (two Plies)"""
         if self.moves:
-            if len(self.moves[-1]) == 2:
-                self.moves.pop()
-            elif len(self.moves[-1]) == 1:
-                self.moves.pop()
+            # if len(self.moves[-1]) == 2:
+            #     self.moves.pop()
+            # elif len(self.moves[-1]) == 1:
+            #     self.moves.pop()
+            self.moves.pop()  # should also work??
 
     def __str__(self) -> str:
         """Return a readable string representation of the history"""
