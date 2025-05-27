@@ -38,8 +38,13 @@ class FourInARow:
         ]
         self.board: ShowBoard = ShowBoard(self.matrix, width, height)
         self.is_finished: bool = False
-        self.out_of_moves = False
-        self.history = History()
+        self.out_of_moves: bool = False
+        self.history: History = History()
+        self.next_turn = randint(1, 2)
+        if self.next_turn == 1:
+            self.symbol_one = "X"
+        else:
+            self.symbol_one = "O"
 
     def load_board(self, newmatrix: list[list[str]]) -> None:
         """can load a custom matrix into the game"""
@@ -51,15 +56,14 @@ class FourInARow:
 
     def gameplay(self) -> None:
         """gameplay loop of our connect-four game"""
-        counter = randint(1, 2)
         while not self.is_finished:  # counter: int
-            if counter == 1:
+            if self.next_turn == 1:
                 sleep(2)
                 self.bot_move()
-                counter = 2
+                self.next_turn = 2
             else:
                 self.player_move()
-                counter = 1
+                self.next_turn = 1
             self.check_finished()
             print(str(self.history))
         if self.out_of_moves:
@@ -158,10 +162,24 @@ class FourInARow:
     def view_history(self):
         """Setting up ViewHistory class and if a matrix is returned
         a new board is being setup"""
-        view_history = ViewHistory(self.history, self.width, self.height)
+        view_history = ViewHistory(
+            self.history, self.width, self.height, self.symbol_one
+        )
         continue_playing = view_history.view_loop()
         if continue_playing:
             self.load_board(continue_playing)
+            self.history.moves = view_history.current_list.moves
+            if self.history.moves:
+                last_play = self.history.moves[-1][-1]
+                last_entry = "-"
+                for entry in self.matrix[last_play - 1]:
+                    if entry == "-":
+                        break
+                    last_entry = entry
+                if last_entry == "X":
+                    self.next_turn = 2
+                else:
+                    self.next_turn = 1
             self.gameplay()
 
 
