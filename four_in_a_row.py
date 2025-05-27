@@ -5,6 +5,7 @@ from time import sleep
 
 from classes import safe_inputs as Safe
 from classes.show_board import ShowBoard
+from classes.history_view import ViewHistory
 from classes.history import History
 from engine import ai_random
 
@@ -45,6 +46,8 @@ class FourInARow:
         if len(newmatrix) >= 1:
             self.matrix = newmatrix
             self.board.change_values(len(self.matrix), len(self.matrix[0]), self.matrix)
+            self.check_finished()
+            self.is_finished = False
 
     def gameplay(self) -> None:
         """gameplay loop of our connect-four game"""
@@ -61,6 +64,7 @@ class FourInARow:
             print(str(self.history))
         if self.out_of_moves:
             print("The game ended in a draw!")
+        self.view_history()
 
     def player_move(self) -> None:
         """Asking the player, which move he wants to take"""
@@ -75,7 +79,7 @@ class FourInARow:
             )
             if "-" in self.matrix[column]:
                 self.place_symbol(column, symbol)
-                self.history.add_ply(column)
+                self.history.add_ply(column + 1)
                 return
 
     def bot_move(self) -> None:
@@ -87,7 +91,7 @@ class FourInARow:
         )
         column: int = randomai.random_move
         self.place_symbol(column, symbol)
-        self.history.add_ply(column)
+        self.history.add_ply(column + 1)
 
     def place_symbol(self, column, symbol: str) -> None:
         """Remove the first '-' in the list and replace it with the symbol"""
@@ -102,6 +106,7 @@ class FourInARow:
         """Checks if all the possible moves have been played already"""
         for column in self.matrix:
             if "-" in column:
+                self.out_of_moves = False
                 return
         self.is_finished = True
         self.out_of_moves = True
@@ -149,6 +154,15 @@ class FourInARow:
                     return result
             else:
                 return result
+
+    def view_history(self):
+        """Setting up ViewHistory class and if a matrix is returned
+        a new board is being setup"""
+        view_history = ViewHistory(self.history, self.width, self.height)
+        continue_playing = view_history.view_loop()
+        if continue_playing:
+            self.load_board(continue_playing)
+            self.gameplay()
 
 
 if __name__ == "__main__":

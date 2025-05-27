@@ -38,9 +38,17 @@ class History:
 
         :param column: The column index where the piece was dropped."""
         if not self.moves or len(self.moves[-1]) == 2:
-            self.moves.append([column + 1])
+            self.moves.append([column])
         else:
-            self.moves[-1].append(column + 1)
+            self.moves[-1].append(column)
+
+    def undo_last_ply(self) -> None:
+        """undo the last ply (single half-move)"""
+        if self.moves:
+            if len(self.moves[-1]) == 2:
+                self.moves[-1].pop()
+            else:
+                self.moves.pop()
 
     def undo_last_full_move(self) -> None:
         """Undo the last full-move (two Plies)"""
