@@ -10,12 +10,22 @@ from classes.show_board import ShowBoard
 class ViewHistory:
     """Methods for looking through the history of a played game"""
 
-    def __init__(self, history: History, width: int = 7, height: int = 6, win: int = 4):
+    def __init__(
+        self,
+        history: History,
+        width: int = 7,
+        height: int = 6,
+        symbol_one: str = "X",
+    ):
         self.move_list: History = history
         self.current_list: History = deepcopy(self.move_list)
         self.width = width
         self.height = height
-        self.win_condition = win
+        self.symbol_one = symbol_one
+        if self.symbol_one == "X":
+            self.symbol_two = "O"
+        else:
+            self.symbol_two = "X"
         self.board_setup: ShowBoard = ShowBoard(self.convert_to_matrix(), width, height)
 
     def view_loop(self) -> list[list[str]]:
@@ -80,9 +90,9 @@ class ViewHistory:
             for ply in full_move:
                 iteration += 1
                 if iteration % 2:
-                    matrix[ply - 1].append("X")
+                    matrix[ply - 1].append(self.symbol_one)
                 else:
-                    matrix[ply - 1].append("O")
+                    matrix[ply - 1].append(self.symbol_two)
         for column in matrix:
             fill_column = self.height - len(column)
             for _ in range(fill_column):
