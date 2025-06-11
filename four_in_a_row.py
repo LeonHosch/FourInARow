@@ -169,7 +169,7 @@ class FourInARow:
         if continue_playing:
             self.load_board(continue_playing)
             self.history.moves = view_history.current_list.moves
-            if self.history.moves:
+            if self.history.moves != [["Quit"]]:
                 last_play = self.history.moves[-1][-1]
                 last_entry = "-"
                 for entry in self.matrix[last_play - 1]:
