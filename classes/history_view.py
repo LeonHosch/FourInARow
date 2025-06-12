@@ -19,11 +19,11 @@ class ViewHistory:
     ):
         self.move_list: History = history
         self.current_list: History = deepcopy(self.move_list)
-        self.width = width
-        self.height = height
-        self.symbol_one = symbol_one
+        self.width: int = width
+        self.height: int = height
+        self.symbol_one: str = symbol_one
         if self.symbol_one == "X":
-            self.symbol_two = "O"
+            self.symbol_two: str = "O"
         else:
             self.symbol_two = "X"
         self.board_setup: ShowBoard = ShowBoard(self.convert_to_matrix(), width, height)
@@ -33,7 +33,7 @@ class ViewHistory:
         while True:
             user = int_safe_input(
                 "1) Undo move\n2) Redo move\n3) Show Board\n4)"
-                " Start game from current state\nQuit program\nInput: ",
+                " Start game from current state\n5) Quit program\nInput: ",
                 1,
                 5,
             )
@@ -46,7 +46,7 @@ class ViewHistory:
             elif user == 4:
                 return self.convert_to_matrix()
             else:
-                return
+                return [["Quit"]]
 
     def move_back(self) -> None:
         """Undo a move and show the board"""
