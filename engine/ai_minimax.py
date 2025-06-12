@@ -33,11 +33,12 @@ class Minimax:
 
     def check_vertical(self) -> int:
         """Check the board and give points checking the y axis"""
+        vertical_points: int = 0
         for column in self.gamestate:  # list[str]
             remaining_plays: int = 6 - len(column)
             previous: str | None = None
             match_in_row: int = 0
-            vertical_points: int = 0
+            vertical_points = 0
             for matrix_value in column:  # matrix_value: str
                 match_in_row = self.check_match(previous, matrix_value, match_in_row)
                 previous = matrix_value
@@ -49,12 +50,13 @@ class Minimax:
 
     def check_horizontal(self) -> int:
         """Check the board and give points checking the x axis"""
+        horizontal_points: int = 0
         for row in range(self.height):
             previous: str | None = None
             previous_in_row: int = 0
             match_in_row: int = 0
             possible_in_row: int = 0
-            horizontal_points: int = 0
+            horizontal_points = 0
             for column in self.gamestate:  # column: list[str]
                 try:
                     matrix_value: str | None = column[row]
