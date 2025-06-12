@@ -53,11 +53,7 @@ class History:
     def undo_last_full_move(self) -> None:
         """Undo the last full-move (two Plies)"""
         if self.moves:
-            # if len(self.moves[-1]) == 2:
-            #     self.moves.pop()
-            # elif len(self.moves[-1]) == 1:
-            #     self.moves.pop()
-            self.moves.pop()  # should also work??
+            self.moves.pop()
 
     def __str__(self) -> str:
         """Return a readable string representation of the history"""
