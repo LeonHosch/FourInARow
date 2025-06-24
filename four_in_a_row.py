@@ -8,7 +8,7 @@ from classes.show_board import ShowBoard
 from classes.history_view import ViewHistory
 from classes.history import History
 from engine import ai_random
-from engine import ai_negamax_2
+from engine import ai_negamax
 
 
 def custom_game() -> list[int]:
@@ -94,7 +94,7 @@ class FourInARow:
         randomai: ai_random.Random = ai_random.Random(
             gamestate, symbol, [self.height, self.width]
         )
-        negamaxai: ai_negamax_2.Negamax = ai_negamax_2.Negamax(gamestate, symbol)
+        negamaxai: ai_negamax.Negamax = ai_negamax.Negamax(gamestate, symbol)
         column: int = randomai.random_move
         column = negamaxai.best_move
         self.place_symbol(column, symbol)
