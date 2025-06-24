@@ -2,7 +2,7 @@
 
 import unittest
 
-from engine.ai_negamax_2 import Negamax
+from engine.ai_negamax import Negamax
 
 
 class TestCases(unittest.TestCase):
