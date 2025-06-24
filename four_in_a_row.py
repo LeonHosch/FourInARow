@@ -8,6 +8,7 @@ from classes.show_board import ShowBoard
 from classes.history_view import ViewHistory
 from classes.history import History
 from engine import ai_random
+from engine import ai_negamax_2
 
 
 def custom_game() -> list[int]:
@@ -93,7 +94,9 @@ class FourInARow:
         randomai: ai_random.Random = ai_random.Random(
             gamestate, symbol, [self.height, self.width]
         )
+        negamaxai: ai_negamax_2.Negamax = ai_negamax_2.Negamax(gamestate, symbol)
         column: int = randomai.random_move
+        column = negamaxai.best_move
         self.place_symbol(column, symbol)
         self.history.add_ply(column + 1)
 
@@ -162,24 +165,23 @@ class FourInARow:
     def view_history(self):
         """Setting up ViewHistory class and if a matrix is returned
         a new board is being setup"""
-        view_history = ViewHistory(
+        view_history: ViewHistory = ViewHistory(
             self.history, self.width, self.height, self.symbol_one
         )
-        continue_playing = view_history.view_loop()
-        if continue_playing:
+        continue_playing: list[list[str]] = view_history.view_loop()
+        if continue_playing != [["Quit"]]:
             self.load_board(continue_playing)
             self.history.moves = view_history.current_list.moves
-            if self.history.moves != [["Quit"]]:
-                last_play = self.history.moves[-1][-1]
-                last_entry = "-"
-                for entry in self.matrix[last_play - 1]:
-                    if entry == "-":
-                        break
-                    last_entry = entry
-                if last_entry == "X":
-                    self.next_turn = 2
-                else:
-                    self.next_turn = 1
+            last_play = self.history.moves[-1][-1]
+            last_entry = "-"
+            for entry in self.matrix[last_play - 1]:
+                if entry == "-":
+                    break
+                last_entry = entry
+            if last_entry == "X":
+                self.next_turn = 2
+            else:
+                self.next_turn = 1
             self.gameplay()
 
 
