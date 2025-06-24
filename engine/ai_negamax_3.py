@@ -1,5 +1,6 @@
 """A class for the negamax ai player algorithm"""
 
+from copy import deepcopy
 from random import randint
 
 
@@ -32,14 +33,14 @@ class Negamax:
         else:
             self.opposite_symbol = "X"
 
-    def check_horizontal(self) -> int:
+    def check_horizontal(self, copyboard) -> int:
         """Checking the board horizontally and adding points accordingly"""
         temp_points: int = 0
         for level in range(6):
             previous = None
             max_in_row = 0
             in_row = 0
-            for column in self.gameboard:
+            for column in copyboard:
                 if column[level] == previous == self.symbol:
                     in_row += 1
                     if max_in_row < in_row:
@@ -53,10 +54,10 @@ class Negamax:
                 temp_points += max_in_row * max_in_row
         return temp_points
 
-    def check_vertical(self) -> int:
+    def check_vertical(self, copyboard) -> int:
         """Checks the gameboard vertically and adding points accordingly"""
         temp_points: int = 0
-        for column in self.gameboard:
+        for column in copyboard:
             previous = None
             in_row = 0
             for value in column:
@@ -81,14 +82,15 @@ class Negamax:
         for number in range(7):
             if "-" in self.gameboard[number]:
                 index = self.gameboard[number].index("-")
-                self.gameboard[number][index] = self.symbol
+                copyboard = deepcopy(self.gameboard)
+                copyboard[number][index] = self.symbol
                 temp_points: int = 0
-                temp_points += self.check_horizontal()
-                temp_points += self.check_vertical()
+                temp_points += self.check_horizontal(copyboard)
+                temp_points += self.check_vertical(copyboard)
                 if temp_points <= IS_WON:
                     if self.further:
                         current_cycle = Negamax(
-                            self.gameboard,
+                            copyboard,
                             self.opposite_symbol,
                             self.further - 1,
                             not self.bot,
@@ -100,9 +102,7 @@ class Negamax:
                 else:
                     best_points = temp_points
                     best_move = number
-                    self.gameboard[number][index] = "-"
                     break
-                self.gameboard[number][index] = "-"
         if not self.bot:
             best_points = -best_points
         self.points += best_points
