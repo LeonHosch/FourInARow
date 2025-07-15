@@ -2,9 +2,9 @@
 
 from copy import deepcopy
 
-from classes.history import History
-from classes.safe_inputs import int_safe_input
-from classes.show_board import ShowBoard
+from modules.history import History
+from modules.safe_inputs import int_safe_input
+from modules.show_board import ShowBoard
 
 
 class ViewHistory:

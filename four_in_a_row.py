@@ -3,10 +3,10 @@
 from random import randint
 from time import sleep
 
-from classes import safe_inputs as Safe
-from classes.show_board import ShowBoard
-from classes.history_view import ViewHistory
-from classes.history import History
+from modules import safe_inputs as Safe
+from modules.show_board import ShowBoard
+from modules.history_view import ViewHistory
+from modules.history import History
 from engine import ai_random
 from engine import ai_negamax
 
