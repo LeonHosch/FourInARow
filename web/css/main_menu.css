@@ -1,0 +1,12 @@
+/*=====MAIN MENU BUTTON DESIGN=====*/
+.main_menu_button {
+    height: 70px;
+    width: 300px;
+    padding: 10px 40px;
+    font-size: 28px;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--bg-hover);
+    color: var(--text-color);
+    cursor: pointer;
+}

@@ -1,0 +1,67 @@
+/*=====DEFAULT WEBSITE DESIGN=====*/
+:root {
+    --bg-color: #212121;
+    --panel-color: #1E1E1E;
+    --text-color: #e0e0e0;
+    --text-secondary: #AAAAAA;
+    --primary-accent: #4FC3F7;
+    --click-color: #0288D1;
+    --border-color: #333333;
+    --bg-hover: #2E2F38;
+}
+
+body {
+    background-color: var(--bg-color);
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 120px;
+    color: var(--text-color);
+    text-transform: uppercase;
+    text-shadow: 
+        -2px -2px 0 black,
+        2px -2px 0 black,
+        -2px  2px 0 black,
+        2px  2px 0 black,
+        0px  0px 3px black;
+}
+
+
+/*=====STANDARDIZED DESIGN FOR CENTERING=====*/
+#webpage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+
+/*=====STANDARDIZED HOME BUTTON=====*/
+.home_button {
+    width: 50px;
+    height: 50px;
+    background: url('/web/pictures/home.png') no-repeat center;
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.home_button:hover {
+    transform: scale(1.05);
+}
+
+
+/*=====STANDARDIZED INPUT FIELD=====*/
+.input_field {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-color);
+    padding: 5px 5px;
+}
