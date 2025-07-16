@@ -2,7 +2,7 @@
 
 import unittest
 
-from classes.history import History
+from modules.history import History
 
 
 class TestHistory(unittest.TestCase):
@@ -10,7 +10,7 @@ class TestHistory(unittest.TestCase):
 
     def setUp(self):
         """Set up a new history instance before each test"""
-        self.history = History()
+        self.history: History = History()
 
     def test_add_ply_single(self):
         """Test adding a single ply"""

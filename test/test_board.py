@@ -2,7 +2,7 @@
 
 import unittest
 
-from classes.board import Board
+from modules.board import Board
 
 
 def test_board_initialization():
@@ -16,7 +16,7 @@ def test_board_initialization():
     When the Board class is instantiated
     Then it should create a 6x7 empty grid filled with spaces.
     """
-    board = Board()
+    board: Board = Board()
     assert board.rows == 6
     assert board.columns == 7
     assert all(len(row) == 7 for row in board.grid)
@@ -34,7 +34,7 @@ def test_drop_piece_valid():
     When a piece is dropped into a valid column
     Then it should be placed in the lowest available row of that column.
     """
-    board = Board()
+    board: Board = Board()
     assert board.drop_piece(0, "X") is True
     assert board.grid[5][0] == "X"
 
@@ -50,7 +50,7 @@ def test_drop_piece_invalid_column():
     When a piece is dropped into an invalid column (e.g., -1 or 7)
     Then it should return False and not modify the board.
     """
-    board = Board()
+    board: Board = Board()
     assert board.drop_piece(-1, "X") is False
     assert board.drop_piece(7, "X") is False
     assert all(len(row) == 7 for row in board.grid)
@@ -68,7 +68,7 @@ def test_drop_piece_full_column():
     When a piece is dropped into that column
     Then it should return False and not modify the board.
     """
-    board = Board()
+    board: Board = Board()
     for _ in range(6):
         assert board.drop_piece(0, "X") is True
     assert board.grid[0][0] == "X"
@@ -87,7 +87,7 @@ def test_is_full_false():
     When the board is not full
     Then test if is full should return False.
     """
-    board = Board()
+    board: Board = Board()
     assert board.is_full() is False
 
 
@@ -103,7 +103,7 @@ def test_is_full_true():
     When the board is full
     Then test if is full should return True.
     """
-    board = Board()
+    board: Board = Board()
     for col in range(board.columns):
         for _ in range(board.rows):
             board.drop_piece(col, "X")
@@ -121,7 +121,7 @@ def test_check_winner_horizontal():
     When the check_winner method is called
     Then it should return True for that player.
     """
-    board = Board()
+    board: Board = Board()
     for col in range(4):
         board.drop_piece(col, "X")
     assert board.check_winner("X") is True
@@ -138,7 +138,7 @@ def test_check_winner_vertical():
     When the check_winner method is called
     Then it should return True for that player.
     """
-    board = Board()
+    board: Board = Board()
     for _ in range(4):
         board.drop_piece(0, "X")
     assert board.check_winner("X") is True
@@ -155,7 +155,7 @@ def test_check_winner_diagonal_bottom_left_to_top_right():
     When the check_winner method is called
     Then it should return True for that player.
     """
-    board = Board()
+    board: Board = Board()
     board.drop_piece(0, "X")
     board.drop_piece(1, "O")
     board.drop_piece(1, "X")
@@ -180,7 +180,7 @@ def test_check_winner_diagonal_top_left_to_bottom_right():
     When the check_winner method is called
     Then it should return True for that player.
     """
-    board = Board()
+    board: Board = Board()
     board.drop_piece(3, "X")
     board.drop_piece(2, "O")
     board.drop_piece(2, "X")
@@ -205,7 +205,7 @@ def test_check_winner_no_winner():
     When the check_winner method is called
     Then it should return False for both players.
     """
-    board = Board()
+    board: Board = Board()
     board.drop_piece(0, "X")
     board.drop_piece(1, "O")
     board.drop_piece(2, "X")
@@ -225,7 +225,7 @@ def test_check_is_draw():
     When the check_winner method is called
     Then it should return False for both players.
     """
-    board = Board()
+    board: Board = Board()
     for _ in range(3):
         board.drop_piece(0, "X")
         board.drop_piece(1, "O")
@@ -257,7 +257,7 @@ def test_reset_board():
     When the reset method is called
     Then it should clear the board and set all cells to empty spaces.
     """
-    board = Board()
+    board: Board = Board()
     board.drop_piece(0, "X")
     board.reset()
     assert all(cell == " " for row in board.grid for cell in row)
@@ -274,7 +274,7 @@ def test_board_str_empty():
     When the __str__ method is called
     Then it should return a string representation of an empty board.
     """
-    board = Board()
+    board: Board = Board()
     expected_output = (
         " | | | | | | \n"
         " | | | | | | \n"
@@ -299,11 +299,11 @@ def test_board_str_with_pieces():
     When the __str__ method is called
     Then it should return a string representation of the board with the pieces.
     """
-    board = Board()
+    board: Board = Board()
     board.drop_piece(0, "X")
     board.drop_piece(1, "O")
     board.drop_piece(1, "X")
-    expected_output = (
+    expected_output: str = (
         " | | | | | | \n"
         " | | | | | | \n"
         " | | | | | | \n"
@@ -327,7 +327,7 @@ def test_switch_player():
     When the switch_player method is called
     Then it should toggle the current player between 1 and -1.
     """
-    board = Board()
+    board: Board = Board()
     assert board.current_player == 1  # Initial player
     board.switch_player()
     assert board.current_player == -1  # After first switch

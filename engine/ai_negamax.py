@@ -23,7 +23,7 @@ class Negamax:
         self.set_opposite()
         self.further: int = further
         self.bot: bool = bot
-        self.best_move = self.evaluate_moves()
+        self.best_move: int = self.evaluate_moves()
 
     def set_opposite(self) -> None:
         """Setting the opposite of self.bot and symbol"""
@@ -36,9 +36,9 @@ class Negamax:
         """Checking the board horizontally and adding points accordingly"""
         temp_points: int = 0
         for level in range(6):
-            previous = None
-            max_in_row = 0
-            in_row = 0
+            previous: str | None = None
+            max_in_row: int = 0
+            in_row: int = 0
             for column in self.gameboard:
                 if column[level] == previous == self.symbol:
                     in_row += 1
@@ -57,8 +57,8 @@ class Negamax:
         """Checks the gameboard vertically and adding points accordingly"""
         temp_points: int = 0
         for column in self.gameboard:
-            previous = None
-            in_row = 0
+            previous: str | None = None
+            in_row: int = 0
             for value in column:
                 if value == "-":
                     break
